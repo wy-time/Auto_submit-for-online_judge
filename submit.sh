@@ -1,5 +1,6 @@
 #!/bin/bash
-DIR=$(dirname `pwd`/$0)
+# DIR=$(dirname `pwd`/$0)
+cd $(dirname $0)
 if [ $# -lt 1 ]; then
     echo "输入参数错误"
     exit 1
@@ -9,7 +10,7 @@ if [ $1 == 'cf' ]; then
         echo "输入参数错误"
         exit 1
     else
-        echo "$1 $2 $3" | python3 $DIR/codeforces.py
+        echo "$1 $2 $3" | python3 ./codeforces.py || python ./codeforces.py
     fi
 else
     echo "功能待完成"

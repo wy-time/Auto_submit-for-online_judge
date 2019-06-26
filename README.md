@@ -11,6 +11,7 @@ save_path可以在配置文件中更改
 save_path下的目录结构如图:
 ![](http://img.startcraft.cn/github/img/1.png)
 ## 使用说明
+脚本使用**python3**编写，请确保有python3环境
 将脚本下载到本地，填写配置文件config.ini,配置文件的说明在配置文件的注释里面,运行submit.sh,参数分别为提交网站(目前只有cf) 比赛id 题目编号
 如: submit.sh cf 1182 a ,这样会把work_path下的mian.cpp作为第1182场cf比赛的A题提交
 比赛id可以从地址栏获得

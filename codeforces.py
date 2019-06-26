@@ -21,11 +21,11 @@ class DriectionError(Exception):
 def init():  # 读取配置文件
     abs_dir = os.path.dirname(os.path.abspath(__file__))
     conf = configparser.ConfigParser()
-    conf.read(abs_dir+"/config.ini")
+    conf.read(abs_dir+"/config.ini", encoding='UTF-8')
     res = conf.items("codeforce")
     for da in res:
         info[da[0]] = da[1]
-    if(info['username']=='username'):
+    if(info['username'] == 'username'):
         print("请填写配置文件")
         exit()
 
@@ -170,17 +170,17 @@ def get_status(url, session):
         print("获取结果失败"+e)
 
 
-def save_code(dir,problem_id):
-    save_path = info['save_path']
+def save_code(dir, problem_id):
     work_path = info['work_path']
-    source_code = open(work_path, 'r')
-    folder=os.path.exists(dir)
+    source_code = open(work_path, 'r', encoding='UTF-8')
+    folder = os.path.exists(dir)
     if not folder:
         os.makedirs(dir)
-    fout=open(dir+problem_id+".cpp",'w')
+    fout = open(dir+problem_id+".cpp", 'w', encoding='UTF-8')
     fout.write(source_code.read())
     source_code.close()
     fout.close()
+
 
 if __name__ == '__main__':
     init()
@@ -198,4 +198,4 @@ if __name__ == '__main__':
     submit(contest_id, problem_id, session, contest_url)  # 提交
     result = get_status(contest_url, session)  # 获得返回结果
     if(result == "Accepted"):
-        save_code(dir,problem_id)
+        save_code(dir, problem_id)
