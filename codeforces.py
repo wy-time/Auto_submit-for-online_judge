@@ -145,7 +145,7 @@ def get_status(url, session):
     flag = True
     try:
         while(flag):
-            time.sleep(3)
+            time.sleep(1)
             response = session.get(url, headers=headers_info)
             html = response.text
             soup = BeautifulSoup(html, "html.parser")
@@ -155,17 +155,20 @@ def get_status(url, session):
             tr = trs[1]
             tds = tr.find_all("td")
             td = tds[5]
-            spans = td.find_all("span")
-            span = spans[1]
-            if(span['class'][0] == "verdict-rejected"):
-                flag = False
-                s1 = str(span)
-                s2 = re.match(r'<.*>(.*)<.*>(\d+).*', s1)
-                print(s2.group(1)+s2.group(2))
-            elif(span['class'][0] == "verdict-accepted"):
-                flag = False
-                print(span.string)
-                return str(span.string)
+            if(td['waiting'] != 'true'):
+                spans = td.find_all("span")
+                span = spans[1]
+                if(span['class'][0] == "verdict-rejected"):
+                    flag = False
+                    s1 = str(span)
+                    s2 = re.match(r'<.*>(.*)<.*>(\d+).*', s1)
+                    print(s2.group(1)+s2.group(2))
+                elif(span['class'][0] == "verdict-accepted"):
+                    flag = False
+                    print(span.string)
+                    return str(span.string)
+            else:
+                print(td.string)
     except Exception as e:
         print("获取结果失败"+e)
 
