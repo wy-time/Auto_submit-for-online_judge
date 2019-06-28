@@ -150,7 +150,11 @@ def get_status(url, session):
             html = response.text
             soup = BeautifulSoup(html, "html.parser")
             tables = soup.find_all("table")
-            table = tables[1]
+            table = []
+            if(len(tables) == 4):
+                table = tables[2]
+            else:
+                table = tables[1]
             trs = table.find_all("tr")
             tr = trs[1]
             tds = tr.find_all("td")
@@ -168,7 +172,14 @@ def get_status(url, session):
                     print(span.string)
                     return str(span.string)
             else:
-                print(td.string)
+                spans = td.find_all("span")
+                if(len(spans) != 0):
+                    span = spans[0]
+                    s1 = str(span)
+                    s2 = re.match(r'<.*>(.*)<.*>(\d+).*', s1)
+                    print(s2.group(1)+s2.group(2))
+                else:
+                    print(td.string)
     except Exception as e:
         print("获取结果失败"+e)
 
@@ -200,5 +211,5 @@ if __name__ == '__main__':
     login(baseurl+"/enter", session)  # 登录
     submit(contest_id, problem_id, session, contest_url)  # 提交
     result = get_status(contest_url, session)  # 获得返回结果
-    if(result == "Accepted"):
+    if(result == "Accepted" or result == "Pretests passed"):
         save_code(dir, problem_id)
