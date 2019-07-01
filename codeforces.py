@@ -152,7 +152,10 @@ def get_status(url, session):
             tables = soup.find_all("table")
             table = []
             if(len(tables) == 4):
-                table = tables[2]
+                if(tables[1]['class'][0] == 'status-frame-datatable' and tables[2]['class'][0] == 'status-frame-datatable'):
+                    table = tables[1]
+                else:
+                    table = tables[2]
             else:
                 table = tables[1]
             trs = table.find_all("tr")
