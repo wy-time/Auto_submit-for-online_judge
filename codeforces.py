@@ -180,7 +180,8 @@ def get_status(url, session):
                     span = spans[0]
                     s1 = str(span)
                     s2 = re.match(r'<.*>(.*)<.*>(\d+).*', s1)
-                    print(s2.group(1)+s2.group(2))
+                    if(s2):
+                        print(s2.group(1)+s2.group(2))
                 else:
                     print(td.string)
     except Exception as e:
